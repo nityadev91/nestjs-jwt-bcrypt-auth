@@ -88,6 +88,15 @@ $ pnpm run test:e2e
 $ pnpm run test:cov
 ```
 
+## Dockerfile
+Build a docker image using Dockerfile
+```
+docker build -t fastify-auth .
+```
+build: Assemble an image based on the Dockerfile instructions.
+
+-t: "Tag" (name) the image my-express-app for easy reference.
+
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.

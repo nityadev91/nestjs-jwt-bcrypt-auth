@@ -13,6 +13,7 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath:'.env.production',
     }), // Load environment variables from .env file
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

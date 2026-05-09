@@ -1,0 +1,7 @@
+node_modules
+dist
+.pnpm-debug.log
+npm-debug.log
+.pnpm-store
+.git
+.env*
