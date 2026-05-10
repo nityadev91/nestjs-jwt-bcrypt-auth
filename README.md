@@ -90,12 +90,25 @@ $ pnpm run test:cov
 
 ## Dockerfile
 Build a docker image using Dockerfile
-```
+```bash
 docker build -t fastify-auth .
+# build: Assemble an image based on the Dockerfile instructions.
+# -t: "Tag" (name) the image my-express-app for easy reference.
+# The structure is: -t name:version
+# latest is the default version
 ```
-build: Assemble an image based on the Dockerfile instructions.
 
--t: "Tag" (name) the image my-express-app for easy reference.
+Create container of docker image using docker-compose.yml
+```bash
+docker-compose up -d
+#  -d means detached mode which means, terminal will give you command control, you can command after runnig the container
+
+# The "All-in-One" Command
+docker-compose up -d --build
+
+
+```
+
 
 ## Deployment
 

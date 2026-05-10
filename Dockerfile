@@ -19,6 +19,9 @@ RUN pnpm install --ignore-scripts
 # Then we will copy the project files
 COPY . .
 
+# Generate the dist folder
+RUN pnpm run build
+
 # Declaring running port
 EXPOSE 3000
 
