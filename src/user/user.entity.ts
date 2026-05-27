@@ -2,9 +2,9 @@ import { } from '@nestjs/common';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Double } from 'typeorm';
 
 export enum UserRole {
-    USER = 'user',
+    SUPER_ADMIN = 'super_admin',
     ADMIN = 'admin',
-    SUPER_ADMIN = 'super_admin'
+    USER = 'user',
 }
 
 @Entity()
@@ -15,10 +15,10 @@ export class User {
     @Column({ unique: true })
     username: string;
 
-    @Column({ unique: true })
+    @Column({ unique: true, nullable: true })
     email: string;
 
-    @Column({ unique: true, nullable: true })
+    @Column({ unique: true, nullable: false }) 
     mobile?: string;
 
     @Column({ select: false }) // Exclude password from query results by default
@@ -33,11 +33,14 @@ export class User {
     @Column({ default: true })
     is_active: boolean;
 
+    @Column({nullable: true})
+    last_seen_at: Date;
+
     @Column({ default: UserRole.USER })
     role: UserRole;
 
     @CreateDateColumn({select: false})
-    created_at: Date;
+    joined_at: Date;
 
     @UpdateDateColumn({select: false})
     updated_at: Date;  
