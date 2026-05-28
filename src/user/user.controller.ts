@@ -16,19 +16,18 @@ export class UserController {
         return this.userService.create(user);
     }
 
-
     @UseGuards(JwtAuthGuard)
     @Get('all')
     findAll() {
         return this.userService.findAll();
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get('all/:username')
     findOne(@Param('username') username: string) {
         // Implementation for finding a single user
         return this.userService.findOneByUsername(username);
     }
-
 
     @Put('all/:username')
     async update(@Param('username') username: string, @Body() updateData: Omit<User, 'id' | 'is_active' | 'createdAt' | 'updatedAt'>) {

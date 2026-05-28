@@ -1,22 +1,33 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn  } from "typeorm";
-
+import { OneToMany } from "typeorm";
+import { Vehicle } from "../vehicles/vehicles.entity";
+import { ServiceTicket } from "src/service-ticket/service-ticket.entity";
 @Entity()
 export class Customer{
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id:string;
 
-    @Column()
-    mobile:Number;
+    @Column({unique:true, nullable:false})
+    email:String;
+    
+    @Column({nullable:false})
+    mobile:string;
 
-    @Column({name:'first_name'})
+    @Column({})
     firstName:string;
 
-    @Column({name:'last_name'})
+    @Column({})
     lastName:string;
 
-    @CreateDateColumn({select:false,name:'created_at'})
+    @OneToMany(()=>Vehicle, vehicle=>vehicle.customer)
+    vehicles:Vehicle[];
+
+    @OneToMany(()=>ServiceTicket,ticket=>ticket.customer)
+    tickets:ServiceTicket[];
+
+    @CreateDateColumn({select:false})
     createdAt:Date;
 
-    @CreateDateColumn({select:false,name:'updated_at'})
+    @UpdateDateColumn({select:false})
     updatedAt:Date;
 }

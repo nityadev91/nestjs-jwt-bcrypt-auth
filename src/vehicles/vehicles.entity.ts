@@ -1,4 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToOne, ManyToMany } from "typeorm";
+import { Customer } from '../customer/customer.entity';
+import { Brand } from "src/brand/brand.entity";
+import { MaxLength } from "class-validator";
+import { ServiceTicket } from "src/service-ticket/service-ticket.entity";
+import { Inventory } from "src/inventory/inventory.entity";
 
 export enum VehicleType {
     CAR = 'car',
@@ -11,42 +16,38 @@ export enum VehicleType {
     OTHER = 'other'
 }
 
-export enum Brand {
-    TOYOTA = 'toyota',
-    HONDA = 'honda',
-    BMW = 'bmw',
-    MERCEDES = 'mercedes',
-    MARUTI = 'maruti',
-    TATA = 'tata',
-    MAHINDRA = 'mahindra',
-    BAJAJ = 'bajaj',
-    HERO = 'hero',
-    ROYAL_ENFIELD = 'royal_enfield',
-    TVS = 'tvs',
-    ASHOK_LEYLAND = 'ashok_leyland',
-    EICHER = 'eicher'
-}
-
 @Entity()
 export class Vehicle {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
-    type: VehicleType;
+    @Column({type:'enum',enum:VehicleType})
+    'vehicleType': VehicleType;
 
-    @Column()
-    brand: Brand;
-
-    @Column({ name: 'model_name' })
+    @Column({})
     modelName: string;
 
-    @Column({ name: 'model_year' })
-    modelYear: string;
+    @Column({})
+    modelYear: number;
 
-    @CreateDateColumn({ select: false, name: 'created_at' })
+    @Column({ nullable: true })
+    engineType: string;
+
+    @ManyToOne(() => Customer, customer => customer.vehicles)
+    customer: Customer;
+
+    @ManyToOne(() => Brand, brand => brand.vehicles)
+    brand: Brand;
+
+    @ManyToMany(()=>Inventory,inventory=>inventory.vehicles)
+    inventories:Inventory[];
+
+    @OneToOne(() => ServiceTicket, ticket => ticket.vehicle)
+    ticket: ServiceTicket;
+
+    @CreateDateColumn({ select: false })
     createdAt: Date;
 
-    @CreateDateColumn({ select: false, name: 'updated_at' })
+    @UpdateDateColumn({ select: false })
     updatedAt: Date;
 }
